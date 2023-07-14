@@ -161,10 +161,13 @@ class GeoJsonParser {
       switch (geometryType) {
         case 'Point':
           {
+            final lat = f['geometry']['coordinates'][1];
+            final lng = f['geometry']['coordinates'][0];
+            if (lat == null || lng == null) {
+              continue;
+            }
             markers.add(
-              markerCreationCallback!(
-                  LatLng(f['geometry']['coordinates'][1] as double,
-                      f['geometry']['coordinates'][0] as double),
+              markerCreationCallback!(LatLng(lat as double, lng as double),
                   f['properties'] as Map<String, dynamic>),
             );
           }
